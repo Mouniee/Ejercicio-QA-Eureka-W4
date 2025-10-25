@@ -1,0 +1,257 @@
+/* 1. Paleta de Colores y Variables */
+:root {
+    --it-blue-main: #007bff;         /* Azul vibrante principal */
+    --it-blue-dark: #0056b3;         /* Azul oscuro para hover/activos */
+    --it-blue-text: #004085;         /* Azul oscuro para texto y fondos */
+    --it-gray-light: #f8f9fa;        /* Gris muy claro para fondos */
+    --it-gray-medium: #e9ecef;       /* Gris medio para bordes */
+    --it-gray-dark: #6c757d;         /* Gris oscuro para texto secundario */
+    --it-white: #ffffff;            /* Blanco */
+    --it-black: #212529;            /* Negro para texto principal */
+    --it-black-2: #140f07;            /* Negro para texto principal */
+}
+
+/* 2. Animaciones */
+@keyframes subtle-gradient-animation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* 3. Estilos Globales y Tipografía */
+body {
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    background-color: var(--it-gray-light);
+    color: var(--it-black);
+}
+
+#main-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--it-blue-text);
+    font-weight: 700;
+}
+
+/* 4. Navbar */
+.navbar {
+    background-color: var(--it-white) !important;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    z-index: 1030;
+}
+
+.navbar-brand {
+    color: var(--it-black) !important;
+    font-weight: 800;
+    font-size: 1.3rem;
+}
+
+/* 5. Contenido Principal */
+#main-content {
+    background-color: var(--it-gray-light);
+    flex-grow: 1;
+}
+
+.page-header-wrapper {
+    padding: 0rem; /* Margen blanco alrededor del cuadro azul */
+    min-height: 100%; /* Ocupa toda la altura disponible */
+}
+
+.page-header {
+    background: linear-gradient(135deg, var(--it-blue-main), var(--it-blue-dark), #2c3e50);
+    background-size: 200% 200%;
+    color: var(--it-white);
+    animation: subtle-gradient-animation 15s ease infinite;
+    box-shadow: 0 8px 25px rgba(0, 123, 255, 0.3);
+    align-self: stretch; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.page-header h1 {
+    color: var(--it-white);
+    font-weight: 800;
+}
+
+/* 6. Otros Componentes */
+
+footer { 
+    background-color: var(--it-blue-text); 
+    color: var(--it-white); 
+    padding: 1.5rem 0; 
+}
+
+/* 7. Estilos del Menú Off-canvas (el azul) */
+.offcanvas.bg-dark-blue { 
+    background-color: var(--it-blue-text) !important; 
+    color: var(--it-white); 
+}
+
+.offcanvas .offcanvas-title { 
+    color: var(--it-white); 
+}
+
+.offcanvas .btn-close-white { 
+    filter: invert(1) grayscale(100%) brightness(200%); 
+}
+
+.offcanvas .list-group-item { 
+    background-color: var(--it-blue-text); 
+    color: var(--it-white); 
+    border: none; 
+    font-weight: 500; 
+}
+
+.offcanvas .list-group-item-action:hover, 
+.offcanvas .list-group-item-action:focus { 
+    background-color: var(--it-blue-main); 
+    color: var(--it-white); 
+}
+
+/* Estilo para el botón de menú personalizado */
+.btn-primary-custom {
+    background-color: var(--it-blue-dark);
+    color: var(--it-white);
+    border: none;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+}
+
+.btn-primary-custom:hover {
+    background-color: var(--it-blue-dark);
+    color: var(--it-white);
+}
+
+/* 8. Tarjetas de Semanas */
+.feature-card {
+    background-color: var(--it-white);
+    border: 1px solid var(--it-gray-medium); /* Borde corregido */
+    border-radius: 8px;
+    text-align: center;
+    padding: 1.5rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+}
+
+.feature-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    border-color: var(--it-blue-main); /* Borde al pasar el mouse corregido */
+}
+
+/* REGLA AÑADIDA PARA CONTROLAR LA IMAGEN Y SU ESPACIO */
+.feature-card .card-img-placeholder {
+    width: 100%;
+    max-width: 150px; /* Ancho máximo para la imagen */
+    height: auto;
+    background-color: var(--it-white);
+    border-radius: 8px;
+    margin-bottom: 1.5rem; /* <-- AQUÍ CONTROLAS EL ESPACIO */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.feature-card .card-img-placeholder img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.feature-card .card-body {
+    padding: 0;
+}
+
+.feature-card .card-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--it-blue-dark); /* Color de título corregido */
+    margin-bottom: 0.25rem;
+}
+
+.feature-card .card-text {
+    font-size: 1rem;
+    color: var(--it-gray-dark); /* Color de texto corregido */
+}
+
+
+/* 9. Estilos para Páginas de Contenido (Semana 2, etc.) */
+.content-section {
+    background-color: var(--it-white);
+    border-radius: 8px;
+    padding: 2.5rem;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    margin-bottom: 2.5rem !important;
+}
+
+.section-title {
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid var(--it-gray-medium);
+    color: var(--it-blue-dark);
+}
+
+.content-card {
+    background-color: var(--it-gray-light);
+    border-left: 4px solid var(--it-blue-main);
+    padding: 1.25rem;
+    border-radius: 5px;
+}
+
+.card-title-custom {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--it-black);
+    margin-bottom: 0.5rem;
+}
+
+.thead-it-blue {
+    background-color: var(--it-blue-text);
+    color: var(--it-white);
+}
+
+/* Estado normal: blanco con texto negro */
+.btn-menu{
+  background-color:#fff !important;
+  color:#212529 !important;
+  border:1px solid #dee2e6 !important;
+}
+
+/* Hover y clic: azul (tu color) */
+.btn-menu:hover,
+.btn-menu:active{
+  background-color: var(--it-blue-main) !important; /* o #0d6efd */
+  color:#fff !important;
+  border-color: var(--it-blue-main) !important;
+}
+
+/* Focus (teclado): mantener blanco, solo anillo de enfoque accesible */
+.btn-menu:focus,
+.btn-menu:focus-visible{
+  background-color:#fff !important;
+  color:#212529 !important;
+  border-color:#dee2e6 !important;
+  box-shadow: 0 0 0 .25rem rgba(13,110,253,.25) !important; /* anillo */
+}
+
+/* Cuando el menú esté ABIERTO, Bootstrap pone aria-expanded="true" en el botón.
+   En ese caso se ve azul; al cerrarlo vuelve a blanco automáticamente. */
+.btn-menu[aria-expanded="true"]{
+  background-color: var(--it-blue-main) !important;
+  color:#fff !important;
+  border-color: var(--it-blue-main) !important;
+}
+.btn-menu[aria-expanded="false"]{
+  background-color:#fff !important;
+  color:#212529 !important;
+  border-color:#dee2e6 !important;
+}
+

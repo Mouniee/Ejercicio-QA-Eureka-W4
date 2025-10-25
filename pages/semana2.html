@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Semana 2 - Plan de Pruebas</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="../assets/css/style.css" rel="stylesheet">
+
+  <style>
+    .sidebar-nav-custom .nav-link {
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+        transition: all 0.2s ease-in-out;
+        background-color: var(--it-white);
+        color: var(--it-black);
+        border: 1px solid var(--it-gray-medium);
+        text-align: center;
+        padding: 0.75rem 1.25rem;
+    }
+    .sidebar-nav-custom .nav-link:hover {
+        background-color: var(--it-blue-main);
+        color: var(--it-white);
+        border-color: var(--it-blue-main);
+    }
+    .sidebar-nav-custom .nav-link.active,
+    .sidebar-nav-custom .nav-link.active:focus {
+        background-color: var(--it-blue-main) !important;
+        color: var(--it-white) !important;
+        border-color: var(--it-blue-main) !important;
+        font-weight: 700;
+        box-shadow: none;
+    }
+    .sidebar-nav-custom .nav-link:focus {
+       box-shadow: 0 0 0 .25rem rgba(13,110,253,.25) !important;
+       background-color: var(--it-white);
+       color: var(--it-black);
+       border-color: var(--it-gray-medium);
+    }
+    .tab-pane.fade {
+        transition: opacity 0.35s ease-in-out;
+    }
+    .sidebar-nav-custom.sticky-top {
+        top: 80px; 
+    }
+
+    
+    #semana2-nav-content {
+        min-height: 75vh;
+    }
+
+
+  </style>
+</head>
+<body class="body-animated-bg">
+
+<div id="main-container">
+    <nav class="navbar navbar-expand-lg border-bottom sticky-top">
+        <div class="container-fluid">
+            <button class="btn btn-menu me-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSidebar" aria-controls="offcanvasSidebar">
+                <i class="fas fa-bars me-2"></i>Menú
+            </button>
+            <a class="navbar-brand" href="../index.html">Programa Eureka | QA</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="ref.html">Bibliografía</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="offcanvas offcanvas-start bg-dark-blue" tabindex="-1" id="offcanvasSidebar" aria-labelledby="offcanvasSidebarLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title text-white" id="offcanvasSidebarLabel">Navegación</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div class="list-group list-group-flush">
+                <a href="#" class="list-group-item list-group-item-action bg-dark-blue text-white fw-bold" data-bs-toggle="collapse" data-bs-target="#collapseQAConceptsMobile">
+                    <i class="fas fa-code me-2"></i><span>Semana 1: Conceptos Clave</span><i class="fas fa-chevron-down float-end mt-1"></i>
+                </a>
+                <div class="collapse" id="collapseQAConceptsMobile">
+                    <a href="p1.html" class="list-group-item list-group-item-action bg-dark-blue text-white ps-5">...</a>
+                    </div>
+
+                <a href="#" class="list-group-item list-group-item-action bg-dark-blue text-white fw-bold active" data-bs-toggle="collapse" data-bs-target="#collapseWeek2">
+                    <i class="fas fa-clipboard-list me-2"></i><span>Semana 2: Plan de Pruebas</span><i class="fas fa-chevron-down float-end mt-1"></i>
+                </a>
+                <div class="collapse show" id="collapseWeek2"> 
+                    <a href="#introduccion" class="list-group-item list-group-item-action bg-dark-blue text-white ps-5" data-bs-dismiss="offcanvas">1. Introducción y Alcance</a>
+                    <a href="#estrategia" class="list-group-item list-group-item-action bg-dark-blue text-white ps-5" data-bs-dismiss="offcanvas">2. Estrategia de Pruebas</a>
+                    <a href="#ambiente" class="list-group-item list-group-item-action bg-dark-blue text-white ps-5" data-bs-dismiss="offcanvas">3. Ambiente de Pruebas</a>
+                    <a href="#casos-de-prueba" class="list-group-item list-group-item-action bg-dark-blue text-white ps-5" data-bs-dismiss="offcanvas">4. Casos de Prueba</a>
+                    <a href="#gestion-defectos" class="list-group-item list-group-item-action bg-dark-blue text-white ps-5" data-bs-dismiss="offcanvas">5. Gestión de Defectos</a>
+                </div>
+                <a href="semana3.html" class="list-group-item list-group-item-action bg-dark-blue text-white"><i class="fas fa-chart-bar me-2"></i><span>Semana 3: Evidencias</span></a>
+            </div>
+        </div>
+    </div>
+
+    <main class="container py-5">
+        <div class="row g-4 g-lg-5">
+            
+            <div class="col-lg-2">
+                <nav class="nav nav-pills flex-column sidebar-nav-custom sticky-top" id="semana2-nav">
+                    <a class="nav-link active" id="nav-intro-tab" data-bs-toggle="pill" data-bs-target="#introduccion" href="#" role="tab" aria-controls="introduccion" aria-selected="true">
+                        Introducción y Alcance
+                    </a>
+                    <a class="nav-link" id="nav-estrategia-tab" data-bs-toggle="pill" data-bs-target="#estrategia" href="#" role="tab" aria-controls="estrategia" aria-selected="false">
+                        Estrategias de pruebas
+                    </a>
+                    <a class="nav-link" id="nav-ambiente-tab" data-bs-toggle="pill" data-bs-target="#ambiente" href="#" role="tab" aria-controls="ambiente" aria-selected="false">
+                        Ambiente de Pruebas
+                    </a>
+                    <a class="nav-link" id="nav-casos-tab" data-bs-toggle="pill" data-bs-target="#casos-de-prueba" href="#" role="tab" aria-controls="casos-de-prueba" aria-selected="false">
+                        Casos de Pruebas
+                    </a>
+                    <a class="nav-link" id="nav-gestion-tab" data-bs-toggle="pill" data-bs-target="#gestion-defectos" href="#" role="tab" aria-controls="gestion-defectos" aria-selected="false">
+                        Gestión de Defectos
+                    </a>
+                </nav>
+            </div>
+
+            <div class="col-lg-8">
+
+                <header class="mb-5" id="main-content-header">
+                    <h1 class="display-5 fw-bold text-center">Plan de Pruebas: APIs de Gestión</h1>
+                </header>
+                <div class="tab-content" id="semana2-nav-content">
+                    
+                    <div class="tab-pane fade show active" id="introduccion" role="tabpanel" aria-labelledby="nav-intro-tab">
+                        <section class="content-section">
+                            <h2 class="section-title"><i class="fas fa-bullseye me-2"></i>1. Introducción y Alcance</h2>
+                            <h3 class="h5 mt-4"><strong>1.1. Objetivo General</strong></h3>
+                            <p>Validar la funcionalidad, fiabilidad y robustez de dos API REST desarrolladas con Spring Boot:</p>
+                            <ul>
+                                <li><strong>API Repo 1 (semana1):</strong> Gestiona las entidades "Especificaciones" y "Ofertas".</li>
+                                <li><strong>API Repo 2 (solicitudes):</strong> Gestiona "Solicitudes" de empleo y sus "Documentos" asociados.</li>
+                            </ul>
+                            <h3 class="h5 mt-4"><strong>1.2. Alcance de las Pruebas (In-Scope)</strong></h3>
+                            <p>Se probarán todas las funcionalidades expuestas a través de los endpoints definidos para cada API.</p>
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped">
+                                    <thead class="thead-it-blue">
+                                        <tr><th>Repositorio</th><th>Endpoints a Probar</th><th>Operaciones</th></tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><td><strong>Repo 1</strong></td><td><code>/api/ofertas</code> <br> <code>/api/especificaciones</code></td><td><code>GET</code>, <code>POST</code>, <code>DELETE</code> (para Especificaciones)</td></tr>
+                                        <tr><td><strong>Repo 2</strong></td><td><code>/api/v1/solicitudes</code> <br> <code>/api/v1/documentos</code></td><td><code>GET</code>, <code>POST</code>, <code>PUT</code>, <code>DELETE</code> (CRUD completo)</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <h3 class="h5 mt-4"><strong>1.3. Fuera de Alcance (Out-of-Scope)</strong></h3>
+                            <ul>
+                                <li><strong>Pruebas de Interfaz Gráfica (UI):</strong> No aplica para APIs de backend.</li>
+                                <li><strong>Pruebas de Carga y Estrés a gran escala:</strong> No se realizarán simulaciones de miles de usuarios concurrentes.</li>
+                                <li><strong>Pruebas de Penetración de Seguridad:</strong> No se incluye un análisis exhaustivo de vulnerabilidades.</li>
+                            </ul>
+                        </section>
+                    </div>
+
+                    <div class="tab-pane fade" id="estrategia" role="tabpanel" aria-labelledby="nav-estrategia-tab">
+                        <section class="content-section">
+                            <h2 class="section-title"><i class="fas fa-sitemap me-2"></i>2. Estrategia de Pruebas</h2>
+                            <p>La estrategia se centra en la API, verificando la lógica de negocio, el manejo de datos y la gestión de errores a través de peticiones HTTP.</p>
+                            <h3 class="h5 mt-4"><strong>2.1. Niveles de Prueba</strong></h3>
+                            <ul>
+                                <li><strong>Pruebas de Integración:</strong> Se enfocan en la interacción entre la API y la base de datos MySQL...</li>
+                                <li><strong>Pruebas de Sistema:</strong> Se prueba la API como un sistema completo...</li>
+                            </ul>
+                            <h3 class="h5 mt-4"><strong>2.2. Tipos de Prueba</strong></h3>
+                            <h4>Pruebas Funcionales</h4>
+                            <p>Estas pruebas se realizarán con <strong>Postman</strong>.</p>
+                            <ul>
+                                <li><strong>Happy Path Testing:</strong> Comprobación de las operaciones CRUD...</li>
+                                <li><strong>Negative Testing & Error Handling:</strong> Comprobación de la respuesta del sistema...</li>
+                            </ul>
+                            <h4>Pruebas No Funcionales (Básicas)</h4>
+                            <ul>
+                                <li><strong>Pruebas de Rendimiento:</strong> Medición de tiempos de respuesta...</li>
+                                <li><strong>Pruebas de Seguridad:</strong> Verificación de que la API no exponga información sensible...</li>
+                            </ul>
+                        </section>
+                    </div>
+
+                    <div class="tab-pane fade" id="ambiente" role="tabpanel" aria-labelledby="nav-ambiente-tab">
+                        <section class="content-section">
+                            <h2 class="section-title"><i class="fas fa-server me-2"></i>3. Ambiente de Pruebas</h2>
+                            <p>La configuración del ambiente de pruebas difiere para cada proyecto.</p>
+                            <h3 class="h5 mt-4"><strong>3.1. Herramientas Comunes</strong></h3>
+                            <ul>
+                                <li><strong>Cliente API:</strong> Postman.</li>
+                                <li><strong>Cliente de Base de Datos:</strong> DBeaver, MySQL Workbench o similar.</li>
+                            </ul>
+                            <h3 class="h5 mt-4"><strong>3.2. Configuración del Ambiente</strong></h3>
+                            <ul>
+                                <li><strong>Para Repo 1 (semana1):</strong>
+                                    <ol>
+                                        <li><strong>Tecnología:</strong> Aplicación y base de datos containerizadas con Docker.</li>
+                                        <li><strong>Ejecución:</strong> Construcción de la imagen de la aplicación...</li>
+                                        <li><strong>Endpoint Base:</strong> <code>http://localhost:8080</code>...</li>
+                                    </ol>
+                                </li>
+                                <li class="mt-2"><strong>Para Repo 2 (solicitudes):</strong>
+                                    <ol>
+                                        <li><strong>Tecnología:</strong> Aplicación local con Maven...</li>
+                                        <li><strong>Ejecución:</strong> Iniciar la base de datos con <code>docker-compose up -d</code>...</li>
+                                        <li><strong>Endpoint Base:</strong> <code>http://localhost:8080/api/v1/</code>.</li>
+                                    </ol>
+                                </li>
+                            </ul>
+                        </section>
+                    </div>
+
+                    <div class="tab-pane fade" id="casos-de-prueba" role="tabpanel" aria-labelledby="nav-casos-tab">
+                        <section class="content-section">
+                            <h2 class="section-title"><i class="fas fa-tasks me-2"></i>4. Casos de Prueba</h2>
+                            <p>A continuación se presenta un resumen de los casos de prueba a ejecutar y un ejemplo detallado.</p>
+                            <h3 class="h5 mt-4"><strong>4.1. Matriz de Casos de Prueba (Resumen)</strong></h3>
+                            <h4>API Repo 1: /api/especificaciones</h4>
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped">
+                                    <thead class="thead-it-blue">
+                                        <tr><th>ID Caso</th><th>Título</th><th>Pasos</th><th>Resultado Esperado</th><th>Tipo</th></tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><td>TC-E01</td><td>Crear una especificación...</td><td>1. Enviar <code>POST</code>...</td><td>Código <code>201 Created</code>...</td><td>Happy Path</td></tr>
+                                        <tr><td>TC-E02</td><td>Intentar crear una especificación...</td><td>1. Enviar <code>POST</code>...</td><td>Código <code>400 Bad Request</code>...</td><td>Negative</td></tr>
+                                        <tr><td>TC-E03</td><td>Eliminar una especificación...</td><td>1. Enviar <code>DELETE</code>...</td><td>Código <code>204 No Content</code>...</td><td>Happy Path</td></tr>
+                                        <tr><td>TC-E04</td><td>Intentar obtener una especificación...</td><td>1. Enviar <code>GET</code>...</td><td>Código <code>404 Not Found</code>.</td><td>Negative</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <h4 class="mt-4">API Repo 2: /api/v1/solicitudes</h4>
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped">
+                                    <thead class="thead-it-blue">
+                                        <tr><th>ID Caso</th><th>Título</th><th>Pasos</th><th>Resultado Esperado</th><th>Tipo</th></tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><td>TC-S01</td><td>Actualizar una solicitud...</td><td>1. Enviar <code>PUT</code>...</td><td>Código <code>200 OK</code>...</td><td>Happy Path</td></tr>
+                                        <tr><td>TC-S02</td><td>Obtener la lista completa...</td><td>1. Enviar <code>GET</code>...</td><td>Código <code>200 OK</code>...</td><td>Happy Path</td></tr>
+                                        <tr><td>TC-S03</td><td>Poblar datos y verificar...</td><td>1. Seguir los pasos...</td><td>Código <code>200 OK</code>...</td><td>Funcional</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <h3 class="h5 mt-5"><strong>4.2. Detalle de Caso de Prueba</strong></h3>
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <tbody>
+                                        <tr><th style="width: 25%;">ID del Caso de Prueba</th><td>TC-E01</td></tr>
+                                        <tr><th>Proyecto</th><td>API Repo 1 (semana1)</td></tr>
+                                        <tr><th>Endpoint</th><td><code>POST /api/especificaciones</code></td></tr>
+                                        <tr><th>Título</th><td>Crear una especificación con datos válidos.</td></tr>
+                                        <tr><th>Resumen</th><td>Verificar que se puede crear una nueva...</td></tr>
+                                        <tr><th>Precondiciones</th><td><ol class="mb-0"><li>El servicio de la API...</li><li>La base de datos MySQL...</li><li>Se conoce el <code>id</code> de una <code>oferta</code>...</li></ol></td></tr>
+                                        <tr><th>Pasos de Ejecución</th><td><ol class="mb-0"><li>Configurar una petición <code>POST</code>...</li><li>En <code>Headers</code>...</li><li>En <code>Body</code> (raw, JSON)...</li><li>Enviar la petición.</li></ol></td></tr>
+                                        <tr><th>Resultados Esperados</th><td><ol class="mb-0"><li>El código de estado... <strong><code>201 Created</code></strong>.</li><li>El cuerpo de la respuesta...</li><li><strong>Verificación en BBDD:</strong>...</li></ol></td></tr>
+                                        <tr><th>Post-condiciones</th><td>Un nuevo registro de "especificación"...</td></tr>
+                                        <tr><th>Prioridad</th><td>Alta</td></tr>
+                                        <tr><th>Riesgo</th><td>Alta</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="tab-pane fade" id="gestion-defectos" role="tabpanel" aria-labelledby="nav-gestion-tab">
+                        <section class="content-section">
+                            <h2 class="section-title"><i class="fas fa-bug me-2"></i>5. Gestión de Defectos</h2>
+                            <h3 class="h5 mt-4"><strong>5.1. Proceso de Reporte</strong></h3>
+                            <p>Los defectos identificados durante la ejecución de las pruebas serán reportados y gestionados...</p>
+                            <h3 class="h5 mt-4"><strong>5.2. Estructura del Reporte de Defectos</strong></h3>
+                            <p>Cada reporte deberá contener la siguiente información:</p>
+                            <ul>
+                                <li><strong>Título:</strong> Corto y descriptivo.</li>
+                                <li><strong>Descripción:</strong> Detalle del problema y su impacto.</li>
+                                <li><strong>Pasos para Reproducir:</strong> Lista numerada y clara para replicar el error.</li>
+                                <li><strong>Resultado Actual:</strong> Comportamiento observado en la aplicación.</li>
+                                <li><strong>Resultado Esperado:</strong> Comportamiento que la aplicación debería tener...</li>
+                                <li><strong>Severidad/Prioridad:</strong> Clasificación del impacto y urgencia...</li>
+                            </ul>
+                        </section>
+                    </div>
+
+                </div> </div> </div> </main>
+    <footer class="py-3 mt-auto">
+        <div class="container text-center">
+            <small class="text-white">&copy; 2025 • Programa Eureka • QA</small>
+        </div>
+    </footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const mainHeader = document.querySelector('#main-content-header');
+        const mainNavbar = document.querySelector('nav.navbar');
+        const navbarHeight = mainNavbar ? mainNavbar.offsetHeight : 60;
+        const mainSidebar = document.querySelector('#semana2-nav');
+
+        function activateTabFromHash() {
+            const hash = window.location.hash;
+            if (hash) {
+                const triggerEl = document.querySelector(`.sidebar-nav-custom .nav-link[data-bs-target="${hash}"]`);
+                
+                if (triggerEl) {
+                    const tab = new bootstrap.Tab(triggerEl);
+                    tab.show();
+                }
+            }
+        }
+
+        if (mainSidebar) {
+            mainSidebar.addEventListener('shown.bs.tab', event => {
+                const newHash = event.target.dataset.bsTarget; 
+
+                if (newHash && window.location.hash !== newHash) {
+                    history.pushState(null, null, newHash);
+                }
+
+                if (mainHeader) { 
+                    window.scrollTo({
+                        top: mainHeader.offsetTop - navbarHeight - 20,
+                        
+                        behavior: 'smooth' 
+
+                    });
+                } else {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            });
+        }
+
+        activateTabFromHash();
+        
+        window.addEventListener('hashchange', activateTabFromHash, false);
+    });
+</script>
+
+</body>
+</html>
+</body>
+</html>

@@ -1,0 +1,497 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Semana 3: Ejecución de Pruebas de UI/Web</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="../assets/css/style.css" rel="stylesheet"> 
+
+    <style>
+
+        :root {
+            --it-blue-main: #007bff;
+            --it-black: #212529;
+            --it-white: #ffffff;
+            --it-gray-medium: #e9ecef;
+        }
+
+        /* Estilo para la imagen miniatura */
+        .evidence-thumbnail {
+            width: 150px; 
+            height: auto;
+            border: 1px solid var(--it-gray-medium);
+            border-radius: 5px;
+            cursor: pointer; 
+            transition: transform 0.2s;
+        }
+        .evidence-thumbnail:hover {
+            transform: scale(1.02);
+        }
+        
+
+
+        /* Oculta el checkbox que controla el despliegue */
+        .css-accordion-checkbox {
+            display: none;
+        }
+
+        /* Estilo base para el encabezado/botón (etiqueta del checkbox) */
+        .css-accordion-label {
+            display: block;
+            cursor: pointer;
+            padding: 0.75rem 1.25rem;
+            margin-bottom: 0;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            font-weight: 500;
+            position: relative;
+            transition: all 0.2s;
+        }
+        /* Indicador de flecha (▼ por defecto) */
+        .css-accordion-label::after {
+            content: "▼";
+            position: absolute;
+            right: 1.25rem;
+            top: 50%; 
+            transform: translateY(-50%); 
+            transition: transform 0.3s ease;
+            color: inherit;
+            font-weight: bold;
+        }
+        /* Flecha (▲) cuando está abierto */
+        .css-accordion-checkbox:checked + .css-accordion-label::after {
+            content: "▲";
+        }
+
+        /* Clases de color para el label de los Test Cases */
+        .css-accordion-label.evidence-success {
+            background-color: #d1e7dd; 
+            color: #0f5132;
+            border-color: #badbcc;
+        }
+        /* Se añade evidence-warning para la advertencia de Karla */
+        .css-accordion-label.evidence-failure,
+        .css-accordion-label.evidence-warning {
+            background-color: #f8d7da;
+            color: #842029;
+            border-color: #f5c2c7;
+        }
+        
+        /* Contenido del acordeón*/
+        .css-accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, padding 0.4s ease-out, border 0.4s ease-out, box-shadow 0.4s ease-out;
+            padding: 0 1.25rem; 
+            background-color: #fff;
+            border: 0px solid #dee2e6; 
+            border-radius: 0 0 5px 5px;
+            box-shadow: none; 
+        }
+        /* Contenido del acordeón: visible cuando el checkbox está checked */
+        .css-accordion-checkbox:checked ~ .css-accordion-content {
+            max-height: 2000px; 
+            padding: 1rem 1.25rem; 
+            border-width: 1px;
+            border-top: none; 
+            box-shadow: 0 5px 5px rgba(0, 0, 0, 0.05);
+        }
+
+
+        
+        .css-lightbox {
+            display: none;
+            position: fixed;
+            z-index: 1050; 
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            text-align: center;
+            padding: 20px;
+        }
+        .css-lightbox:target {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .css-lightbox .lightbox-content {
+            max-width: 90%;
+            max-height: 90%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .css-lightbox img {
+            max-width: 100%;
+            max-height: 80vh; 
+            border: 5px solid #fff;
+            border-radius: 5px;
+            object-fit: contain;
+        }
+        .css-lightbox .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: #fff;
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-decoration: none;
+            line-height: 1;
+            cursor: pointer;
+            opacity: 0.8;
+            transition: opacity 0.2s;
+        }
+        .css-lightbox .close-btn:hover {
+            opacity: 1;
+        }
+        .css-lightbox .lightbox-title {
+            color: #fff;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="main-container">
+    <nav class="navbar navbar-expand-lg border-bottom sticky-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="../index.html">Programa Eureka | QA</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="ref.html">Bibliografía</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container py-5">
+        
+        <header class="mb-5" id="main-content-header">
+            <h1 class="display-5 fw-bold text-center">Semana 4: Ejecución de Pruebas de UI/Web con Selenium</h1>
+            <p class="lead fs-5 text-center text-muted">Evidencias de la ejecución automatizada de pruebas básicas de UI y accesibilidad en el sitio web del compañero.</p>
+        </header>
+        
+        <section class="mb-5" id="introduccion-resultados">
+            <h2 class="h3 fw-bold mb-3"><i class="fas fa-chart-line me-2"></i>1. Introducción y Resumen</h2>
+            <p>Las pruebas se ejecutaron mediante un script de **Selenium/Java** para verificar la carga básica, el título de la página, la estructura de encabezados H1 y la existencia de enlaces principales en el *home*. Todos los test cases principales resultaron en éxito, con un hallazgo de bajo impacto relacionado con los enlaces.</p>
+        </section>
+        
+        <hr class="my-4">
+
+        <section id="evidencias-por-codigo" class="mb-5">
+            <h2 class="h3 fw-bold mb-4"><i class="fas fa-code me-2"></i>2. Evidencias por Código de Tarea</h2>
+            
+            <div class="d-grid gap-3">
+                
+                <div class="accordion-item border-0">
+                    <input type="checkbox" id="checkGustavoCode" class="css-accordion-checkbox" checked>
+                    <label for="checkGustavoCode" class="css-accordion-label mb-0 bg-primary text-white">
+                        <span class="d-block text-start"><i class="fas fa-user-check me-2"></i>Código: Gustavo Code</span>
+                    </label>
+                    <div class="css-accordion-content border-top-0">
+                        
+                        <h3 class="h4 fw-bold mb-4"><i class="fas fa-desktop me-2"></i>2.1. Evidencias – Pruebas de UI/Web</h3>
+                        <div class="d-grid gap-2" id="cssAccordionEvidencias">
+
+                            <div class="accordion-item border-0">
+                                <input type="checkbox" id="checkUI01" class="css-accordion-checkbox">
+                                <label for="checkUI01" class="css-accordion-label evidence-success mb-0">
+                                    <span class="d-block text-start">TC-UI01: Apertura y Carga del Sitio (FASE 1) - ✅ Éxito</span>
+                                </label>
+                                <div class="css-accordion-content border-top-0">
+                                    <div class="d-flex align-items-start justify-content-between gap-3">
+                                        <div class="flex-grow-1">
+                                            <p class="fs-6"><strong>Descripción:</strong> Prueba de apertura de la URL base (`http://localhost:4200/`) y espera de carga completa del DOM.</p>
+                                            <p class="fs-6"><strong>Resultado Actual:</strong> Éxito. El sitio cargó correctamente, y se pudo interactuar con sus elementos.</p>
+                                            <pre class="bg-light p-2"><code>===== FASE 1: ABRIR SITIO =====
+Abriendo: http://localhost:4200/
+[OK] Sitio cargado.</code></pre>
+                                        </div>
+                                        <div>
+            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item border-0">
+                                <input type="checkbox" id="checkUI02" class="css-accordion-checkbox">
+                                <label for="checkUI02" class="css-accordion-label evidence-success mb-0">
+                                    <span class="d-block text-start">TC-UI02: Verificación del Título (FASE 2) - ✅ Éxito</span>
+                                </label>
+                                <div class="css-accordion-content border-top-0">
+                                    <div class="d-flex align-items-start justify-content-between gap-3">
+                                        <div class="flex-grow-1">
+                                            <p class="fs-6"><strong>Descripción:</strong> Verificar que la página tenga un título descriptivo.</p>
+                                            <p class="fs-6"><strong>Resultado Actual:</strong> Éxito. Título encontrado: <strong>"Semana3Angular"</strong>.</p>
+                                            <pre class="bg-light p-2"><code>===== FASE 2: TÍTULO DEL SITIO =====
+Título: Semana3Angular</code></pre>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item border-0">
+                                <input type="checkbox" id="checkUI03" class="css-accordion-checkbox">
+                                <label for="checkUI03" class="css-accordion-label evidence-success mb-0">
+                                    <span class="d-block text-start">TC-UI03: Verificación de Etiquetas H1 (FASE 3) - ✅ Éxito</span>
+                                </label>
+                                <div class="css-accordion-content border-top-0">
+                                    <div class="d-flex align-items-start justify-content-between gap-3">
+                                        <div class="flex-grow-1">
+                                            <p class="fs-6"><strong>Descripción:</strong> Verificar la existencia de al menos una etiqueta</p>
+                                            <p class="fs-6"><strong>Resultado Actual:</strong> Éxito. Se encontró una etiqueta con el texto `"Bienvenido a"`.</p>
+                                            <pre class="bg-light p-2"><code>===== FASE 3: LISTAR H1 =====
+Total H1 encontrados: 1
+  H1 #1: "Bienvenido a"</code></pre>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="accordion-item border-0">
+                                <input type="checkbox" id="checkUI04" class="css-accordion-checkbox">
+                                <label for="checkUI04" class="css-accordion-label evidence-failure mb-0">
+                                    <span class="d-block text-start">TC-UI04: Verificación de Enlaces (FASE 4) - ⚠️ Advertencia</span>
+                                </label>
+                                <div class="css-accordion-content border-top-0">
+                                    <div class="d-flex align-items-start justify-content-between gap-3">
+                                        <div class="flex-grow-1">
+                                            <p class="fs-6"><strong>Descripción:</strong> Verificar la existencia de enlaces navegables (`a[href]`) en la página principal.</p>
+                                            <p class="fs-6"><strong>Resultado Actual:</strong> Se encontraron 3 enlaces. **Hallazgo:** Los enlaces legales apuntan a un *hash* genérico (`#`) (Ver <a href="#gustavo-h001">Hallazgo H-001</a>).</p>
+                                            <pre class="bg-light p-2"><code>===== FASE 4: VERIFICAR ENLACES =====
+Total enlaces (a[href]) encontrados: 3
+- href: http://localhost:4200/ | texto: Regístrate
+- href: http://localhost:4200/# | texto: Términos de servicio
+- href: http://localhost:4200/# | texto: Política de privacidad</code></pre>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <hr class="my-4">
+
+                        <section class="mb-4" id="gustavo-defectos-reportados">
+                            <h3 class="h4 fw-bold mb-3"><i class="fas fa-bug me-2"></i>2.2. Hallazgos Reportados</h3>
+
+                            <div class="mb-3" id="gustavo-h001">
+                                <h4 class="h5 fw-bold text-warning">Hallazgo Menor: H-001 (UI/UX)</h4>
+                                <div class="content-card">
+                                    <p class="card-title-custom">Título: Enlaces legales apuntan a *hash* genérico (`#`).</p>
+                                    <p><strong>Severidad / Prioridad:</strong> <span class="badge bg-warning text-dark">Severidad: Menor</span> <span class="badge bg-info text-dark">Prioridad: Baja</span></p>
+                                    <p><strong>Descripción:</strong> Los enlaces "Términos de servicio" y "Política de privacidad" tienen `href="#"` en lugar de la URL real a la documentación. Esto impide que la navegación funcione correctamente.</p>
+                                </div>
+                            </div>
+                        </section>
+                        
+                        <hr class="my-4">
+
+                        <section id="gustavo-conclusiones">
+                            <h3 class="h4 fw-bold mb-3"><i class="fas fa-lightbulb me-2"></i>2.3. Conclusiones y Recomendaciones</h3>
+                            <p>La ejecución de las pruebas básicas de UI concluyó con **éxito en la carga, título y estructura H1**. La base del sitio es funcional para el navegador. El único punto de atención es el uso de enlaces *placeholder* en las secciones legales, que debe ser corregido antes del despliegue final.</p>
+                            <ol class="mt-3">
+                                <li>Completar Enlaces: Actualizar los `href` de "Términos de servicio" y "Política de privacidad" con las URLs de destino reales (Hallazgo H-001).</li>
+                                <li>Revisar Contenido H1: Aunque existe una etiqueta, revisar si el texto `"Bienvenido a"` es suficientemente descriptivo y relevante para el SEO de la página.</li>
+                            </ol>
+                        </section>
+
+                    </div>
+                </div>
+
+                <div class="accordion-item border-0">
+                    <input type="checkbox" id="checkKarlaCode" class="css-accordion-checkbox">
+                    <label for="checkKarlaCode" class="css-accordion-label mb-0 bg-secondary text-white">
+                        <span class="d-block text-start"><i class="fas fa-user-edit me-2"></i>Código: Karla Code</span>
+                    </label>
+                    <div class="css-accordion-content border-top-0">
+                        
+                        <h3 class="h4 fw-bold mb-4"><i class="fas fa-desktop me-2"></i>2.4. Evidencias – Pruebas de UI/Web (Sitio de Karla)</h3>
+                        <div class="d-grid gap-2">
+
+                            <div class="accordion-item border-0">
+                                <input type="checkbox" id="checkKarlaUI01" class="css-accordion-checkbox">
+                                <label for="checkKarlaUI01" class="css-accordion-label evidence-success mb-0">
+                                    <span class="d-block text-start">TC-UI01: Apertura y Carga del Sitio (FASE 1) - ✅ Éxito</span>
+                                </label>
+                                <div class="css-accordion-content border-top-0">
+                                    <div class="d-flex align-items-start justify-content-between gap-3">
+                                        <div class="flex-grow-1">
+                                            <p class="fs-6"><strong>Descripción:</strong> Prueba de apertura de la URL base (`http://localhost:5173/`) y espera de carga completa del DOM.</p>
+                                            <p class="fs-6"><strong>Resultado Actual:</strong> Éxito. El sitio cargó correctamente, y se pudo interactuar con sus elementos.</p>
+                                            <pre class="bg-light p-2"><code>===== FASE 1: ABRIR SITIO =====
+Abriendo: http://localhost:5173
+[OK] Sitio cargado.</code></pre>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item border-0">
+                                <input type="checkbox" id="checkKarlaUI02" class="css-accordion-checkbox">
+                                <label for="checkKarlaUI02" class="css-accordion-label evidence-success mb-0">
+                                    <span class="d-block text-start">TC-UI02: Verificación del Título (FASE 2) - ✅ Éxito</span>
+                                </label>
+                                <div class="css-accordion-content border-top-0">
+                                    <div class="d-flex align-items-start justify-content-between gap-3">
+                                        <div class="flex-grow-1">
+                                            <p class="fs-6"><strong>Descripción:</strong> Verificar que la página tenga un título descriptivo.</p>
+                                            <p class="fs-6"><strong>Resultado Actual:</strong> Éxito. Título encontrado: <strong>"Inicio - Sistema de Solicitudes"</strong>.</p>
+                                            <pre class="bg-light p-2"><code>===== FASE 2: TÍTULO DEL SITIO =====
+Título: Inicio - Sistema de Solicitudes</code></pre>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item border-0">
+                                <input type="checkbox" id="checkKarlaUI03" class="css-accordion-checkbox">
+                                <label for="checkKarlaUI03" class="css-accordion-label evidence-warning mb-0">
+                                    <span class="d-block text-start">TC-UI03: Verificación de Etiquetas H1 (FASE 3) - ⚠️ Advertencia</span>
+                                </label>
+                                <div class="css-accordion-content border-top-0">
+                                    <div class="d-flex align-items-start justify-content-between gap-3">
+                                        <div class="flex-grow-1">
+                                            <p class="fs-6"><strong>Descripción:</strong> Verificar la existencia y unicidad de la etiqueta para una correcta estructura.</p>
+                                            <p class="fs-6"><strong>Resultado Actual:</strong> Éxito. Se encontraron 2 etiquetas <code>&lt;h1&gt;</code>, ambas con el texto <strong>"Gestión de Solicitudes y Documentos"</strong>. (Ver <a href="#karla-h002">Hallazgo H-002</a>).</p>
+                                            <pre class="bg-light p-2"><code>===== FASE 3: LISTAR H1 =====
+Total H1 encontrados: 2
+  H1 #1: "Gestión de Solicitudes y Documentos"
+  H1 #2: "Gestión de Solicitudes y Documentos"</code></pre>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="accordion-item border-0">
+                                <input type="checkbox" id="checkKarlaUI04" class="css-accordion-checkbox">
+                                <label for="checkKarlaUI04" class="css-accordion-label evidence-warning mb-0">
+                                    <span class="d-block text-start">TC-UI04: Verificación de Enlaces (FASE 4) - ⚠️ Advertencia</span>
+                                </label>
+                                <div class="css-accordion-content border-top-0">
+                                    <div class="d-flex align-items-start justify-content-between gap-3">
+                                        <div class="flex-grow-1">
+                                            <p class="fs-6"><strong>Descripción:</strong> Verificar la existencia y contenido de enlaces navegables (`a[href]`) en la página principal.</p>
+                                            <p class="fs-6"><strong>Resultado Actual:</strong> Se encontraron 3 enlaces. **Hallazgo:** Los 3 enlaces de contacto carecen de texto visible (Ver <a href="#karla-h003">Hallazgo H-003</a>).</p>
+                                            <pre class="bg-light p-2"><code>===== FASE 4: VERIFICAR ENLACES =====
+Total enlaces (a[href]) encontrados: 3
+ - href: https://www.linkedin.com/in/karla-r-4b3802194 | texto: &lt;sin texto&gt;
+ - href: https://wa.me/56912345678 | texto: &lt;sin texto&gt;
+ - href: mailto:karla.ramirez@3it.cl | texto: &lt;sin texto&gt;</code></pre>
+                                        </div>
+                                        <div>
+                                            <a href="#lightboxKarlaUI01">
+                                                <img src="../assets/img/semana3/placeholder_prueba.png" 
+                                                    class="evidence-thumbnail" 
+                                                    alt="Evidencia TC-UI04 Karla">
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <hr class="my-4">
+
+                        <section class="mb-4" id="karla-defectos-reportados">
+                            <h3 class="h4 fw-bold mb-3"><i class="fas fa-bug me-2"></i>2.5. Hallazgos Reportados</h3>
+
+                            <div class="mb-3" id="karla-h002">
+                                <h4 class="h5 fw-bold text-warning">Hallazgo Menor: H-002 (Accesibilidad/SEO)</h4>
+                                <div class="content-card">
+                                    <p class="card-title-custom">Título: Duplicidad de etiqueta H1.</p>
+                                    <p><strong>Severidad / Prioridad:</strong> <span class="badge bg-warning text-dark">Severidad: Menor</span> <span class="badge bg-info text-dark">Prioridad: Baja</span></p>
+                                    <p><strong>Descripción:</strong> La página contiene dos etiquetas <code>&lt;h1&gt;</code> con el mismo texto. Si bien el sitio es funcional, la duplicidad de la etiqueta H1 puede ser confusa para los lectores de pantalla y es una práctica no recomendada para el SEO.</p>
+                                </div>
+                            </div>
+
+                            <div class="mb-3" id="karla-h003">
+                                <h4 class="h5 fw-bold text-warning">Hallazgo Menor: H-003 (Accesibilidad/UI)</h4>
+                                <div class="content-card">
+                                    <p class="card-title-custom">Título: Enlaces de contacto sin texto visible (<code>&lt;sin texto&gt;</code>).</p>
+                                    <p><strong>Severidad / Prioridad:</strong> <span class="badge bg-warning text-dark">Severidad: Menor</span> <span class="badge bg-info text-dark">Prioridad: Baja</span></p>
+                                    <p><strong>Descripción:</strong> Los 3 enlaces de contacto (LinkedIn, WhatsApp y Correo) no tienen texto visible dentro de la etiqueta <code>&lt;a&gt;</code> (según la prueba de Selenium). Si son iconos, deben tener un atributo <code>aria-label</code> o texto alternativo para garantizar la accesibilidad y usabilidad.</p>
+                                </div>
+                            </div>
+                        </section>
+                        
+                        <hr class="my-4">
+
+                        <section id="karla-conclusiones">
+                            <h3 class="h4 fw-bold mb-3"><i class="fas fa-lightbulb me-2"></i>2.6. Conclusiones y Recomendaciones</h3>
+                            <p>La ejecución de las pruebas básicas de UI/Web en el sitio de Karla concluyó con **éxito en la carga y la obtención del título**. El sitio es funcional en un navegador. Se identificaron dos **hallazgos menores** relacionados con la estructura de encabezados y la accesibilidad de los enlaces de contacto.</p>
+                            <ol class="mt-3">
+                                <li>**Corregir H1:** Eliminar la duplicidad de la etiqueta <code>&lt;h1&gt;</code> para mejorar la estructura y el SEO (Hallazgo H-002).</li>
+                                <li>**Mejorar Accesibilidad de Enlaces:** Asegurar que los enlaces de contacto que aparecen como iconos tengan un texto alternativo o un <code>aria-label</code> descriptivo para usuarios de lectores de pantalla (Hallazgo H-003).</li>
+                            </ol>
+                        </section>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+        
+    </main>
+
+    <div class="css-lightbox" id="lightboxUI01">
+        <a href="#" class="close-btn" title="Cerrar">&times;</a>
+        <div class="lightbox-content">
+            <h5 class="lightbox-title">Evidencia TC-UI01: Sitio Cargado</h5>
+            <img src="../assets/img/semana3/ui_fase1_sitio_cargado.png" alt="Evidencia TC-UI01: Sitio Cargado">
+        </div>
+    </div>
+    
+    <div class="css-lightbox" id="lightboxUI02">
+        <a href="#" class="close-btn" title="Cerrar">&times;</a>
+        <div class="lightbox-content">
+            <h5 class="lightbox-title">Evidencia TC-UI02: Título de la Página</h5>
+            <img src="../assets/img/semana3/ui_fase2_titulo.png" alt="Evidencia TC-UI02: Título de la Página">
+        </div>
+    </div>
+
+    <div class="css-lightbox" id="lightboxUI03">
+        <a href="#" class="close-btn" title="Cerrar">&times;</a>
+        <div class="lightbox-content">
+            <h5 class="lightbox-title">Evidencia TC-UI03: Elemento H1 resaltado</h5>
+            <img src="../assets/img/semana3/ui_fase3_h1.png" alt="Evidencia TC-UI03: Elemento H1 resaltado">
+        </div>
+    </div>
+
+    <div class="css-lightbox" id="lightboxUI04">
+        <a href="#" class="close-btn" title="Cerrar">&times;</a>
+        <div class="lightbox-content">
+            <h5 class="lightbox-title">Evidencia TC-UI04: Enlaces resaltados</h5>
+            <img src="../assets/img/semana3/ui_fase4_enlaces.png" alt="Evidencia TC-UI04: Enlaces resaltados">
+        </div>
+    </div>
+
+    <div class="css-lightbox" id="lightboxKarlaUI01">
+        <a href="#" class="close-btn" title="Cerrar">&times;</a>
+        <div class="lightbox-content">
+            <h5 class="lightbox-title">Evidencia Placeholder Karla</h5>
+            <img src="../assets/img/semana3/placeholder_prueba.png" alt="Placeholder">
+        </div>
+    </div>
+
+
+    <footer class="py-3 mt-5">
+        <div class="container text-center">
+            <small class="text-white">&copy; 2025 • Programa Eureka • QA</small>
+        </div>
+    </footer>
+</div>
+
+</body>
+</html>

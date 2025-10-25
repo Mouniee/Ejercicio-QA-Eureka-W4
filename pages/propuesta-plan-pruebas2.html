@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Propuesta de Plan de Pruebas - Semana 3</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../assets/css/style.css" rel="stylesheet">
+  <style>
+  
+    body, h1, h2, h3, h4, h5, h6, p, td, th, a, li, small, span {
+      color: #000 !important;
+    }
+    .table thead th { background:#f8f9fa; }
+    .code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
+  </style>
+</head>
+<body class="bg-white">
+  <nav class="navbar navbar-expand-lg border-bottom navbar-light bg-white">
+    <div class="container">
+      <a class="navbar-brand fw-semibold" href="../index.html">Programa Eureka | QA</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
+              aria-controls="mainNavbar" aria-expanded="false" aria-label="Alternar navegación">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="mainNavbar">
+        <ul class="navbar-nav align-items-lg-center gap-lg-2">
+          <li class="nav-item"><a class="nav-link" href="../index.html">Inicio</a></li>
+          <li class="nav-item"><a class="nav-link" href="ref.html">Bibliografía</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container py-4">
+    <header class="mb-4">
+      <h1 class="h2 mb-1">Propuesta de Plan de Pruebas (Semana 3)</h1>
+      <p class="mb-0">Documento QA para el entregable de la Semana 3: Frontend Angular (3 componentes + routing) que consume APIs de Solicitudes y Documentos.</p>
+    </header>
+
+    <section class="mb-4">
+      <h2 class="h4">1. Alcance y Objetivos</h2>
+      <ul class="mb-0">
+        <li><strong>Frontend (Angular):</strong> verificar menú/routing, componentes <em>Inicio</em>, <em>Listado</em> y <em>Acerca de</em>, consumo de API y manejo de errores.</li>
+        <li><strong>Backend (APIs):</strong> validar CRUD y reglas de negocio de:
+          <span class="code">/solicitudes</span> (puerto 8082) y <span class="code">/documentos</span> (puerto 8083), incluyendo <span class="code">GET/POST/GET:id/PATCH/DELETE</span> y soft delete.
+        </li>
+        <li><strong>No funcional (acotado):</strong> consistencia visual Bootstrap y feedback mínimo en estados vacío/error.</li>
+      </ul>
+    </section>
+
+    <section class="mb-4">
+      <h2 class="h4">2. Ambiente y Datos de Prueba</h2>
+      <ul class="mb-0">
+        <li><strong>Frontend:</strong> Angular local en <span class="code">http://localhost:4200</span> con rutas <span class="code">/inicio</span>, <span class="code">/listado</span>, <span class="code">/acerca</span>.</li>
+        <li><strong>API Solicitudes:</strong> <span class="code">http://localhost:8082</span> → <span class="code">/solicitudes</span>, <span class="code">/solicitudes/:id</span>, <span class="code">/solicitudes/:id/con-documentos</span>, <span class="code">PATCH</span>, <span class="code">DELETE</span>.</li>
+        <li><strong>API Documentos:</strong> <span class="code">http://localhost:8083</span> → <span class="code">/documentos</span>, <span class="code">/documentos/:id</span>, <span class="code">PATCH</span>, <span class="code">DELETE</span>.</li>
+        <li><strong>Datos semilla sugeridos:</strong> 3–5 solicitudes (con/sin documentos), 3–5 documentos asociados, estados <span class="code">pendiente</span>/<span class="code">aprobada</span>, rangos de renta y fechas válidas/ inválidas.</li>
+      </ul>
+    </section>
+
+    <section class="mb-4">
+      <h2 class="h4">3. Herramientas (declaradas)</h2>
+      <ul class="mb-0">
+        <li>Navegador + DevTools (UI y llamadas de red).</li>
+        <li>Postman/cURL para contrastar respuestas (declarado, ejecución fuera de alcance de este documento).</li>
+        <li>Bootstrap 5 para consistencia visual.</li>
+      </ul>
+    </section>
+
+    <section class="mb-4">
+      <h2 class="h4">4. Matriz de Casos – Frontend (Angular)</h2>
+      <div class="table-responsive">
+        <table class="table table-bordered table-sm align-middle">
+          <thead>
+            <tr>
+              <th>ID</th><th>Módulo</th><th>Objetivo</th><th>Precondición</th><th>Pasos</th><th>Resultado Esperado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>FE-01</td><td>Routing</td>
+              <td>Menú visible y activo en todas las páginas</td>
+              <td>App en <span class="code">:4200</span></td>
+              <td>Navegar /inicio → /listado → /acerca desde el menú</td>
+              <td>El menú permanece, resalta ruta activa, sin errores en consola.</td>
+            </tr>
+            <tr>
+              <td>FE-02</td><td>Inicio</td>
+              <td>Contenido informativo con imagen/video</td>
+              <td>Assets disponibles</td>
+              <td>Visitar /inicio</td>
+              <td>Se muestra texto + 1 imagen o video; responsive correcto.</td>
+            </tr>
+            <tr>
+              <td>FE-03</td><td>Listado</td>
+              <td>Cargar solicitudes desde API</td>
+              <td>API 8082 con datos</td>
+              <td>Visitar /listado</td>
+              <td>Tabla con filas = datos API; “Sin resultados” si vacío.</td>
+            </tr>
+            <tr>
+              <td>FE-04</td><td>Listado</td>
+              <td>Manejo de error HTTP</td>
+              <td>Simular caída API</td>
+              <td>Visitar /listado</td>
+              <td>Mensaje de error visible, layout no se rompe.</td>
+            </tr>
+            <tr>
+              <td>FE-05</td><td>Listado</td>
+              <td>Columnas visibles</td>
+              <td>—</td>
+              <td>Inspeccionar columnas</td>
+              <td>id, título, estado, área, país, localización, renta/fecha (si aplica).</td>
+            </tr>
+            <tr>
+              <td>FE-06</td><td>Detalle</td>
+              <td>Ver documentos asociados</td>
+              <td>Solicitudes con docs</td>
+              <td>Ir a detalle (botón/enlace)</td>
+              <td>Consulta <span class="code">/solicitudes/:id/con-documentos</span> y renderiza lista.</td>
+            </tr>
+            <tr>
+              <td>FE-07</td><td>Acerca de</td>
+              <td>Información del autor + 1 media</td>
+              <td>Assets disponibles</td>
+              <td>Visitar /acerca</td>
+              <td>Contenido visible y ordenado en desktop/mobile.</td>
+            </tr>
+            <tr>
+              <td>FE-08</td><td>UI</td>
+              <td>Consistencia Bootstrap</td>
+              <td>—</td>
+              <td>Recorrer todo el sitio</td>
+              <td>Colores y tipografías coherentes (texto en negro).</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="mb-4">
+      <h2 class="h4">5. Matriz de Casos – API Solicitudes (8082)</h2>
+      <div class="table-responsive">
+        <table class="table table-bordered table-sm align-middle">
+          <thead><tr>
+            <th>ID</th><th>Endpoint</th><th>Método</th><th>Objetivo</th><th>Datos/Precondición</th><th>Pasos</th><th>Esperado</th>
+          </tr></thead>
+          <tbody>
+            <tr>
+              <td>API-S-01</td><td>/solicitudes</td><td>GET</td>
+              <td>Listar</td><td>DB con registros</td><td>GET</td>
+              <td>200 + array sin soft-deleted.</td>
+            </tr>
+            <tr>
+              <td>API-S-02</td><td>/solicitudes</td><td>POST</td>
+              <td>Crear válido</td><td>JSON completo</td><td>POST</td>
+              <td>201/200 + objeto (estado por defecto “pendiente”).</td>
+            </tr>
+            <tr>
+              <td>API-S-03</td><td>/solicitudes</td><td>POST</td>
+              <td>Validación requerida</td><td>Falta “titulo”</td><td>POST</td>
+              <td>400 con mensaje de validación.</td>
+            </tr>
+            <tr>
+              <td>API-S-04</td><td>/solicitudes/:id</td><td>GET</td>
+              <td>Obtener por ID</td><td>ID existente</td><td>GET</td>
+              <td>200; 404 si no existe.</td>
+            </tr>
+            <tr>
+              <td>API-S-05</td><td>/solicitudes/:id/con-documentos</td><td>GET</td>
+              <td>Detalle con documentos</td><td>Solicitud con docs</td><td>GET</td>
+              <td>200 + documentos asociados.</td>
+            </tr>
+            <tr>
+              <td>API-S-06</td><td>/solicitudes/:id</td><td>PATCH</td>
+              <td>Actualización parcial</td><td>JSON parcial válido</td><td>PATCH</td>
+              <td>200 + campos actualizados; rechaza campos no permitidos.</td>
+            </tr>
+            <tr>
+              <td>API-S-07</td><td>/solicitudes/:id</td><td>DELETE</td>
+              <td>Soft delete</td><td>ID existente</td><td>DELETE</td>
+              <td>200; marcado <span class="code">deleted_at</span> y no lista.</td>
+            </tr>
+            <tr>
+              <td>API-S-08</td><td>/solicitudes/:id</td><td>GET</td>
+              <td>ID inválido</td><td>No numérico/negativo</td><td>GET</td>
+              <td>400 (bad request).</td>
+            </tr>
+            <tr>
+              <td>API-S-09</td><td>/solicitudes</td><td>GET</td>
+              <td>Paginación/filtros</td><td>Parámetros válidos</td><td>GET con filtros</td>
+              <td>200 con conteo y página consistentes.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="mb-4">
+      <h2 class="h4">6. Matriz de Casos – API Documentos (8083)</h2>
+      <div class="table-responsive">
+        <table class="table table-bordered table-sm align-middle">
+          <thead><tr>
+            <th>ID</th><th>Endpoint</th><th>Método</th><th>Objetivo</th><th>Datos/Precondición</th><th>Pasos</th><th>Esperado</th>
+          </tr></thead>
+          <tbody>
+            <tr>
+              <td>API-D-01</td><td>/documentos</td><td>GET</td>
+              <td>Listar</td><td>Registros existentes</td><td>GET</td>
+              <td>200 + array sin soft-deleted.</td>
+            </tr>
+            <tr>
+              <td>API-D-02</td><td>/documentos</td><td>POST</td>
+              <td>Crear</td><td>JSON válido (incluye solicitud_id)</td><td>POST</td>
+              <td>201/200 + relación correcta con solicitud.</td>
+            </tr>
+            <tr>
+              <td>API-D-03</td><td>/documentos/:id</td><td>GET</td>
+              <td>Obtener por ID</td><td>ID existente</td><td>GET</td>
+              <td>200; 404 si no existe; 400 si ID inválido.</td>
+            </tr>
+            <tr>
+              <td>API-D-04</td><td>/documentos/:id</td><td>PATCH</td>
+              <td>Actualización parcial</td><td>JSON parcial válido</td><td>PATCH</td>
+              <td>200 + actualización persistida.</td>
+            </tr>
+            <tr>
+              <td>API-D-05</td><td>/documentos/:id</td><td>DELETE</td>
+              <td>Soft delete</td><td>ID existente</td><td>DELETE</td>
+              <td>200; registro marcado y no listado.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

@@ -4,7 +4,6 @@
 
 Un sitio web estático y educativo, diseñado para introducir los conceptos fundamentales de Aseguramiento de la Calidad (QA) en el desarrollo de software. El sitio cubre temas teóricos clave y proporciona ejemplos prácticos de planificación de pruebas y evidencias de ejecución.
 
-[Imagen de la página de inicio del sitio web de Eureka QA]
 
 ---
 
